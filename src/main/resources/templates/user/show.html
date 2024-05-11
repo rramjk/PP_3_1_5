@@ -3,67 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Show User</title>
+    <link rel="stylesheet" href="../../static/css/show.css" th:href="@{/css/show.css}" type="text/css">
 </head>
 <body>
-<style>
-    p,h1,h2,h3,h4,h5,h6{
-        margin: 0;
-        padding: 0;
-    }
-    h2 {
-        margin-bottom: 10px;
-    }
-    a{
-        text-decoration: none;
-        color: black;
-        font-size: 17px;
-        margin-bottom: 8px;
-    }
-    a:visited{
-        color: black;
-    }
-    footer {
-        margin-top: 10px;
-        display: flex;
-        flex-direction: row;
-    }
-    footer a {
-        border-radius: 20px;
-        padding: 7px;
-        background-color: beige;
-        display: inline-block;
-        margin: 0 5px 0 0;
-
-    }
-    footer a:visited {
-        background-color: beige;
-    }
-    footer a:hover {
-        background-color: #95958EFF;
-    }
-    body {
-        display: flex;
-        flex-direction: column;
-    }
-    form input {
-        text-decoration: none;
-        color: black;
-        font-size: 17px;
-        border-radius: 20px;
-        padding: 7px;
-        background-color: beige;
-        display: inline-block;
-        border: none;
-        margin-right: 5px;
-    }
-    form input:hover {
-        background-color: #95958EFF;
-        cursor: pointer;
-    }
-    article {
-        font-size: 0.9em;
-    }
-</style>
 <h1 th:text="'Пользователь №' + ${user.getId()}"></h1>
 <h2>
     C привелегиями:

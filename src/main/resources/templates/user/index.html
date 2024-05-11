@@ -3,45 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
+    <link rel="stylesheet" href="../../static/css/index.css" th:href="@{/css/index.css}" type="text/css">
 </head>
 <body>
-<style>
-    p,h1,h2,h3,h4,h5,h6{
-        margin: 0;
-        padding: 0;
-    }
-    h1 {
-        margin-bottom: 10px;
-    }
-    a{
-        text-decoration: none;
-        color: black;
-        font-size: 17px;
-        margin-bottom: 8px;
-    }
-    a:visited{
-        color: black;
-    }
-    footer {
-        margin-top: 10px;
-    }
-    footer a {
-        border-radius: 20px;
-        padding: 7px;
-        background-color: beige;
-        display: inline-block;
-    }
-    footer a:visited {
-        background-color: beige;
-    }
-    footer a:hover {
-        background-color: #95958EFF;
-    }
-    body {
-        display: flex;
-        flex-direction: column;
-    }
-</style>
 <main>
     <h1>Наши пользователи</h1>
     <div class="inner" th:each="user : ${usersList}">

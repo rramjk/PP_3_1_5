@@ -41,7 +41,7 @@ public class AdminController {
             return "user/exception";
         }
         service.deleteUserById(id);
-        return "redirect: /users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/edit")
@@ -62,12 +62,12 @@ public class AdminController {
             return "user/edit";
         }
         service.updateUserById(id, user);
-        return "redirect: /users/show?id="+id;
+        return "redirect:/admin/show?id="+id;
     }
 
     @GetMapping("/create")
     public String showCreatePage(@ModelAttribute("user") User user) {
-        return "create";
+        return "/user/create";
     }
 
     @PostMapping("/create")
@@ -76,8 +76,9 @@ public class AdminController {
         if(result.hasErrors()) {
             return "user/create";
         }
+
         service.addUser(user);
-        return "redirect: /users";
+        return "redirect:/admin";
     }
 
 }

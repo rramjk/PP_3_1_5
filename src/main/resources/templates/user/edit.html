@@ -3,68 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit User</title>
+    <link rel="stylesheet" href="../../static/css/create_edit.css" th:href="@{/css/create_edit.css}" type="text/css">
 </head>
 <body>
-<style>
-    p,h1,h2,h3,h4,h5,h6{
-        margin: 0;
-        padding: 0;
-    }
-    h1 {
-        margin-bottom: 10px;
-    }
-    a{
-        text-decoration: none;
-        color: black;
-        font-size: 17px;
-        margin-bottom: 8px;
-    }
-    a:visited{
-        color: black;
-    }
-    footer {
-        margin-top: 10px;
-    }
-    footer a {
-        border-radius: 20px;
-        padding: 7px;
-        background-color: beige;
-        display: inline-block;
-    }
-    footer a:visited {
-        background-color: beige;
-    }
-    footer a:hover {
-        background-color: #95958EFF;
-    }
-    body {
-        display: flex;
-        flex-direction: column;
-    }
-    .submit {
-        text-decoration: none;
-        color: black;
-        font-size: 17px;
-        border-radius: 20px;
-        padding: 7px;
-        background-color: beige;
-        width: 90px;
-        border: none;
-        margin-right: 5px;
-    }
-    .submit:hover {
-        background-color: #95958EFF;
-        cursor: pointer;
-    }
-    form {
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-    }
-    form div {
-        margin-bottom: 5px;
-    }
-</style>
 <h1>Изменить пользователя:</h1>
 <main>
     <form th:method="POST" th:action="@{/admin/edit(id=${user.getId()})}" th:object="${user}">
@@ -88,6 +29,11 @@
             <input name="age" id="age" th:field="*{age}">
         </div>
         <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}" ></div>
+        <div>
+            <label for="password" style="font-weight: bold">Пароль: </label>
+            <input name="password" id="password" th:field="*{password}">
+        </div>
+        <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></div>
 
         <input class="submit" type="submit" value="Изменить">
     </form>
