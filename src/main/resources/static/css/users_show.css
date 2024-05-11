@@ -5,15 +5,44 @@ p,h1,h2,h3,h4,h5,h6{
 h2 {
     margin-bottom: 10px;
 }
+a:hover {
+    text-decoration: none;
+}
 a{
     text-decoration: none;
     color: black;
     font-size: 17px;
     margin-bottom: 8px;
 }
-a:visited{
-    color: black;
+#about {
+    background: #F7F7F7;
+    font-weight: bolder;
 }
+#about row{
+    border: 1px solid grey;
+}
+
+#columns {
+    background-color: white;
+}
+#columns-name {
+    font-weight: bold;
+}
+#role-pills-tab div {
+    font-weight: initial;
+}
+header {
+    background-color: #343A40;
+    color: white;
+    font-size: 20px;
+}
+#logout {
+    color: #7C868E;
+}
+#email {
+    font-weight: bold;
+}
+
 footer {
     margin-top: 10px;
     display: flex;

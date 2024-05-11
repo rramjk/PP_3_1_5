@@ -13,4 +13,5 @@ public interface UserDao {
     List<User> getUsers();
 
     Optional<User> getUserByName(String name);
+    Optional<User> getUserByEmail(String email);
 }

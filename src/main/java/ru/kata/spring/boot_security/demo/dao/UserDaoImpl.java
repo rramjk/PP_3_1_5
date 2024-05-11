@@ -97,6 +97,22 @@ public class UserDaoImpl implements UserDao {
         }
         return Optional.empty();
     }
+    @Transactional(readOnly = true)
+    public Optional<User> getUserByEmail(String email) {
+        try  {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+            User user = entityManager.createQuery("FROM User u LEFT JOIN FETCH u.roleList WHERE u.email=:email", User.class)
+                    .setParameter("email", email).getResultList().stream().findAny().get();
+            Hibernate.initialize(user.getRoleList());
+            entityManager.getTransaction().commit();
+            entityManager.close();
+            return Optional.of(user);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
 
     @Override
     @Transactional(readOnly = true)
