@@ -18,10 +18,20 @@ a{
     background: #F7F7F7;
     font-weight: bolder;
 }
-#about row{
-    border: 1px solid grey;
+.delete-select {
+    overflow: auto;
+}
+.edit-btn {
+    background-color: #17A2B8;
 }
 
+.delete-btn {
+    background-color: #DC3545;
+}
+#all-users {
+    background: #F7F7F7;
+    font-weight: bolder;
+}
 #columns {
     background-color: white;
 }
@@ -66,20 +76,8 @@ body {
     display: flex;
     flex-direction: column;
 }
-form input {
-    text-decoration: none;
-    color: black;
-    font-size: 17px;
-    border-radius: 20px;
-    padding: 7px;
-    background-color: beige;
-    display: inline-block;
-    border: none;
-    margin-right: 5px;
-}
-form input:hover {
-    background-color: #95958EFF;
-    cursor: pointer;
+.submit-btn {
+    font-size: 20px;
 }
 article {
     font-size: 0.9em;

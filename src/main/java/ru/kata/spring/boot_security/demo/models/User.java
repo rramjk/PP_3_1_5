@@ -20,7 +20,7 @@ public class User {
     private int id;
 
     @Column(name = "name")
-    @Size(min=1, max=100, message = "Имя долэно быть больше 0 и меньше 100 символов!")
+    @Size(min=1, max=100, message = "Имя должно быть больше 0 и меньше 100 символов!")
     @NotEmpty(message = "Поле не может быть пустым!")
     private String name;
 
