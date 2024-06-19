@@ -12,6 +12,7 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.security.UserDetails;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
+import ru.kata.spring.boot_security.demo.util.UserValidator;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -23,18 +24,22 @@ import java.util.List;
 public class AdminController {
     private final UserService service;
     private final RoleService roleService;
+    private final UserValidator userValidator;
 
     @Autowired
-    public AdminController(UserService service, RoleService roleService) {
+    public AdminController(UserService service, RoleService roleService, UserValidator userValidator) {
         this.service = service;
         this.roleService = roleService;
+        this.userValidator = userValidator;
     }
 
+
     @GetMapping()
-    public String index(Model model, @ModelAttribute("clearUser") User user) {
+    public String index(Model model, @ModelAttribute("clearUser") User user, BindingResult result) {
         model.addAttribute("usersList", service.getUsers());
         model.addAttribute("roles", roleService.getRoles());
         model.addAttribute("clearUser", new User());
+        model.addAttribute("editedUser", new User());
         model.addAttribute("clearRole", new Role());
         model.addAttribute("user", ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser());
         return "user/index_page";
@@ -52,18 +57,20 @@ public class AdminController {
 
     @PostMapping("/edit")
     public String editPerson(@RequestParam(value = "id", required = false) Integer id,
-                             @ModelAttribute("users") @Valid User user, BindingResult result,
-                            Model model) {
-        if (service.getUserById(id).isEmpty()) {
-            return "user/exception";
-        }
+                             @ModelAttribute("editedUser") @Valid User user, BindingResult result,
+                            Model model, @ModelAttribute("clearRole") Role role) {
+        userValidator.validate(user, result);
         model.addAttribute("usersList", service.getUsers());
         model.addAttribute("roles", roleService.getRoles());
         model.addAttribute("clearUser", new User());
         model.addAttribute("user", ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser());
+        if (service.getUserById(id).isEmpty()) {
+            return "user/exception";
+        }
         if(result.hasErrors()) {
             return "user/index_page";
         }
+        service.setRoleAtUser(role, user);
         service.updateUserById(id, user);
         return "redirect:/admin";
     }
@@ -71,19 +78,14 @@ public class AdminController {
     @PostMapping("/create")
     public String createPerson(@ModelAttribute("clearUser") @Valid User user,
                                BindingResult result, @ModelAttribute("clearRole") Role role, Model model) {
+        userValidator.validate(user, result);
         if(result.hasErrors()) {
             model.addAttribute("usersList", service.getUsers());
             model.addAttribute("roles", roleService.getRoles());
             model.addAttribute("user", ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser());
             return "user/index_page";
         }
-        System.out.println(role);
-        if(role.getShortRole().equals("ADMIN")) {
-            user.setRoleList(Collections.singletonList(roleService.getRoleById(1)));
-        } else {
-            user.setRoleList(Collections.singletonList(roleService.getRoleById(2)));
-        }
-
+        service.setRoleAtUser(role, user);
         service.addUser(user);
         return "redirect:/admin";
     }

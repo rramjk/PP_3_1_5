@@ -27,7 +27,12 @@ public class Role implements GrantedAuthority {
         return role;
     }
     public String getShortRole() {
-        return role.replaceAll("ROLE_", "");
+        if(role != null) {
+            return role.replaceAll("ROLE_", "");
+        } else {
+            return "USER";
+        }
+
     }
 
     public void setRole(String role) {

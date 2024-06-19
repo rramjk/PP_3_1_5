@@ -87,8 +87,8 @@
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <div class="modal-body w-50 align-self-center">
-                                                            <form th:method="POST" th:action="@{/admin/edit(id=${users.getId()})}">
+                                                        <div class="modal-body">
+                                                            <form class="align-self-center" th:object="${editedUser}" th:method="POST" th:action="@{/admin/edit(id=${users.getId()})}">
                                                                 <fieldset disabled>
                                                                     <div class="form-group">
                                                                         <label class="font-weight-bolder" for="form1ID">ID</label>
@@ -97,44 +97,40 @@
                                                                 </fieldset>
                                                                 <div class="form-group">
                                                                     <label class="font-weight-bolder" for="form1fname">First name</label>
-                                                                    <input type="text" class="form-control" id="form1fname" placeholder="First name" th:value="${users.name}">
-<!--                                                                    <div style="color: red" th:if="${#fields.hasErrors('users.name')}" th:errors="*{users.name}" ></div>-->
+                                                                    <input type="text" class="form-control" id="form1fname" placeholder="First name" th:name="name" th:value="${users.name}">
+                                                                    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" ></div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="font-weight-bolder" for="form1lname">Last name</label>
-                                                                    <input type="text" class="form-control" id="form1lname" placeholder="Last name"  th:value="${users.lastName}">
-<!--                                                                    <div style="color: red" th:if="${#fields.hasErrors('users.lastName')}" th:errors="*{users.lastName}" ></div>-->
+                                                                    <input type="text" class="form-control" id="form1lname" placeholder="Last name" th:name="lastName"  th:value="${users.lastName}">
+                                                                    <div style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" ></div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="font-weight-bolder" for="form1age">Age</label>
-                                                                    <input type="text" class="form-control" id="form1age" placeholder="Age" th:value="${users.age}">
-<!--                                                                    <div style="color: red" th:if="${#fields.hasErrors('users.age')}" th:errors="*{users.age}" ></div>-->
+                                                                    <input type="text" class="form-control" id="form1age" placeholder="Age" th:name="age"  th:value="${users.age}">
+                                                                    <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}" ></div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="font-weight-bolder" for="form1email">Email</label>
-                                                                    <input type="text" class="form-control" id="form1email" placeholder="Email" th:value="${users.email}">
-<!--                                                                    <div style="color: red" th:if="${#fields.hasErrors('users.email')}" th:errors="*{users.email}" ></div>-->
+                                                                    <input type="text" class="form-control" id="form1email" placeholder="Email"  th:name="email" th:value="${users.email}">
+                                                                    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" ></div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="font-weight-bolder" for="form1password">Password</label>
-                                                                    <input type="password" class="form-control" id="form1password" placeholder="Password" th:value="${users.password}">
-<!--                                                                    <div style="color: red" th:if="${#fields.hasErrors('users.password')}" th:errors="*{users.password}" ></div>-->
+                                                                    <input type="text" class="form-control" id="form1password" placeholder="Password"  th:name="password" th:value="${users.password}">
+                                                                    <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="font-weight-bolder" for="form1email">Role</label>
-                                                                    <select class="delete-select w-100 modal-dialog-scrollable" size="2" multiple th:value="${users.roleList}">
-                                                                        <option th:each="role : ${roles}" th:text="${role.getShortRole()}" th:value="${role}"></option>
+                                                                    <select th:object="${clearRole}" th:field="*{role}" class="delete-select w-100 modal-dialog-scrollable" size="2" multiple>
+                                                                        <option th:each="role : ${roles}" th:text="${role.getShortRole()}" th:value="${role.getRole()}"></option>
                                                                     </select>
                                                                 </div>
-                                                                <div class="modal-footer w-100">
+                                                                <div class="edit-footer modal-footer justify-content-end">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                     <input type="submit" value="Edit" class="btn btn-info">
                                                                 </div>
                                                             </form>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-info">Edit</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -153,8 +149,8 @@
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <div class="modal-body w-50 align-self-center">
-                                                            <form th:method="POST" th:action="@{/admin/delete(id=${users.getId()})}">
+                                                        <div class="modal-body">
+                                                            <form class="align-self-center" th:method="POST" th:action="@{/admin/delete(id=${users.getId()})}">
                                                                 <fieldset disabled>
                                                                     <div class="form-group">
                                                                         <label class="font-weight-bolder" for="form1ID">ID</label>
@@ -236,7 +232,7 @@
                                 <div class="form-group">
                                     <label class="font-weight-bolder" for="form1email">Role</label>
                                     <select th:object="${clearRole}" th:field="*{role}" class="delete-select w-100 modal-dialog-scrollable" size="2" multiple>
-                                        <option th:each="role : ${user.getRoleList()}" th:text="${role.getShortRole()}" th:value="${role.getRole()}"></option>
+                                        <option th:each="role : ${roles}" th:text="${role.getShortRole()}" th:value="${role.getRole()}"></option>
                                     </select>
                                 </div>
                                 <input type="submit"  class="submit-btn btn btn-success" value="Add new user">
