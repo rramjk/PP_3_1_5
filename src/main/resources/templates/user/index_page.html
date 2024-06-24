@@ -88,7 +88,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form class="align-self-center" th:object="${editedUser}" th:method="POST" th:action="@{/admin/edit(id=${users.getId()})}">
+                                                            <form class="align-self-center" th:object="${editedUser}" th:method="PATCH" th:action="@{/admin/{id}(id=${users.getId()})}">
                                                                 <fieldset disabled>
                                                                     <div class="form-group">
                                                                         <label class="font-weight-bolder" for="form1ID">ID</label>
@@ -150,7 +150,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form class="align-self-center" th:method="POST" th:action="@{/admin/delete(id=${users.getId()})}">
+                                                            <form class="align-self-center" th:method="DELETE" th:action="@{/admin/{id}(id=${users.getId()})}">
                                                                 <fieldset disabled>
                                                                     <div class="form-group">
                                                                         <label class="font-weight-bolder" for="form1ID">ID</label>
@@ -203,7 +203,7 @@
                             </div>
                         </div>
                         <div class="row border border-1 justify-content-center align-self-center text-center pb-5">
-                            <form class="w-50" th:method="POST" th:action="@{/admin/create}" th:object="${clearUser}">
+                            <form class="w-50" th:method="POST" th:action="@{/admin}" th:object="${clearUser}">
                                 <div class="form-group">
                                     <label class="font-weight-bolder" for="form3fname">First name</label>
                                     <input type="text" class="form-control" id="form3fname" placeholder="First name" th:field="*{name}">

@@ -36,18 +36,12 @@ public class AdminController {
 
     @GetMapping()
     public String index(Model model, @ModelAttribute("clearUser") User user, BindingResult result) {
-        model.addAttribute("usersList", service.getUsers());
-        model.addAttribute("roles", roleService.getRoles());
-        model.addAttribute("clearUser", new User());
-        model.addAttribute("editedUser", new User());
-        model.addAttribute("clearRole", new Role());
-        model.addAttribute("user", ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser());
         return "user/index_page";
     }
 
 
-    @PostMapping("/delete")
-    public String deletePerson(@RequestParam(value = "id", required = false) Integer id) {
+    @DeleteMapping("/{id}")
+    public String deletePerson(@PathVariable("id") Integer id) {
         if (service.getUserById(id).isEmpty()) {
             return "user/exception";
         }
@@ -55,16 +49,12 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PostMapping("/edit")
-    public String editPerson(@RequestParam(value = "id", required = false) Integer id,
+    @PatchMapping("/{id}")
+    public String editPerson(@PathVariable("id") Integer id,
                              @ModelAttribute("editedUser") @Valid User user, BindingResult result,
                             Model model, @ModelAttribute("clearRole") Role role) {
         userValidator.validate(user, result);
-        model.addAttribute("usersList", service.getUsers());
-        model.addAttribute("roles", roleService.getRoles());
-        model.addAttribute("clearUser", new User());
-        model.addAttribute("user", ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser());
-        if (service.getUserById(id).isEmpty()) {
+         if (service.getUserById(id).isEmpty()) {
             return "user/exception";
         }
         if(result.hasErrors()) {
@@ -75,14 +65,11 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public String createPerson(@ModelAttribute("clearUser") @Valid User user,
                                BindingResult result, @ModelAttribute("clearRole") Role role, Model model) {
         userValidator.validate(user, result);
         if(result.hasErrors()) {
-            model.addAttribute("usersList", service.getUsers());
-            model.addAttribute("roles", roleService.getRoles());
-            model.addAttribute("user", ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser());
             return "user/index_page";
         }
         service.setRoleAtUser(role, user);
@@ -90,4 +77,28 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @ModelAttribute("usersList")
+    public List<User> getUserList() {
+        return service.getUsers();
+    }
+    @ModelAttribute("roles")
+    public List<Role> getRoleList() {
+        return roleService.getRoles();
+    }
+    @ModelAttribute("clearUser")
+    public User getClearUser(){
+        return new User();
+    }
+    @ModelAttribute("editedUser")
+    public User getEditedUser(){
+        return new User();
+    }
+    @ModelAttribute("user")
+    public User getCurrentUser(){
+        return ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+    }
+    @ModelAttribute("clearRole")
+    public Role getClearRole() {
+        return new Role();
+    }
 }
