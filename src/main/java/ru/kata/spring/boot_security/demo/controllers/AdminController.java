@@ -39,6 +39,17 @@ public class AdminController {
         return "user/index_page";
     }
 
+    @GetMapping("/api")
+    @ResponseBody
+    public List<User> getUsers() {
+        return service.getUsers();
+    }
+    @GetMapping("/api/{id}")
+    @ResponseBody
+    public User getUserById(@PathVariable int id) {
+        return service.getUserById(id).get();
+    }
+
 
     @DeleteMapping("/{id}")
     public String deletePerson(@PathVariable("id") Integer id) {
