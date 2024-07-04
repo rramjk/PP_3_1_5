@@ -32,7 +32,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Имя пользователя не найдено!");
         }
         User user = optionalUser.get();
-        System.out.println(user);
         return new ru.kata.spring.boot_security.demo.security.UserDetails(user);
     }
 }

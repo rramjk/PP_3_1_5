@@ -52,7 +52,9 @@ header {
 #email {
     font-weight: bold;
 }
-
+#roles span {
+    margin-right: 5px;
+}
 footer {
     margin-top: 10px;
     display: flex;

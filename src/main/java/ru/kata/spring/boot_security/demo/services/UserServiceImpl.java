@@ -7,6 +7,7 @@ import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
+import ru.kata.spring.boot_security.demo.util.UserNotFoundException;
 
 
 import java.util.Collections;
@@ -42,27 +43,23 @@ public class UserServiceImpl implements UserService{
         user.setId(id);
         repository.save(user);
     }
-
+    @Transactional
     public void setRoleAtUser(Role role, User owner) {
-        if (role == null) {
-            if (owner.getId() != 0) {
-                role = getUserById(owner.getId()).get().getRoleList().getFirst();
-            } else {
-                owner.setRoleList(Collections.singletonList(roleService.getRoleById(2)));
-                return;
-            }
-        }
         if(role.getShortRole().equals("ADMIN")) {
             owner.setRoleList(Collections.singletonList(roleService.getRoleById(1)));
         } else{
             owner.setRoleList(Collections.singletonList(roleService.getRoleById(2)));
         }
+
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<User> getUserById(int id) {
-        return repository.getUserById(id);
+    public User getUserById(int id) {
+        Optional<User> optionalUser = repository.getUserById(id);
+        if (optionalUser.isEmpty()) throw new UserNotFoundException("Пользователь не найден!");
+
+        return optionalUser.get();
     }
 
     @Override
